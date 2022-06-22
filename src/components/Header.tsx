@@ -6,6 +6,7 @@ import Currency from './Currency/Currency'
 import { GetCategoriesQuery } from '../generated-types/types'
 import { useApolloClient } from '@apollo/client'
 import { GET_CATEGORIES } from '../graphql/getCategories'
+import { theme } from '../styles/theme'
 
 /*
  * STYLES
@@ -20,8 +21,8 @@ const Wrapper = styled.div`
 `
 
 const Container = styled.div`
-  max-width: 1440px;
-  width: 80%;
+  max-width: ${theme.containerWidth}px;
+  width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -44,7 +45,7 @@ const Header = () => {
   return (
     <Wrapper>
       <Container>
-        <Tabs items={tabItems || []} />
+        <Tabs items={tabItems || []} searchedParam="category" />
         <img src={logo} alt="Logo" />
         <Currency />
       </Container>

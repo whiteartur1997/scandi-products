@@ -96,3 +96,10 @@ export type GetCurrenciesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetCurrenciesQuery = { __typename?: 'Query', currencies?: Array<{ __typename?: 'Currency', label: string, symbol: string } | null> | null };
+
+export type GetProductsQueryVariables = Exact<{
+  title: Scalars['String'];
+}>;
+
+
+export type GetProductsQuery = { __typename?: 'Query', category?: { __typename?: 'Category', name?: string | null, products: Array<{ __typename?: 'Product', name: string } | null> } | null };

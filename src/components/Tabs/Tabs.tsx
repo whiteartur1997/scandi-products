@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { theme } from '../../styles/theme'
+import { useGetQueryParameter } from '../../hooks/useGetQueryParameter'
 
 /*
  * TYPES
@@ -8,6 +9,7 @@ import { theme } from '../../styles/theme'
 
 interface Props {
   items: string[]
+  searchedParam?: string
 }
 
 /*
@@ -47,13 +49,23 @@ const TabItem = styled.div`
  * COMPONENT
  */
 
-const Tabs: React.FC<Props> = ({ items }) => {
+const Tabs: React.FC<Props> = ({ items, searchedParam }) => {
+  const { queryParameter, onChangeQueryParameter } =
+    useGetQueryParameter(searchedParam)
   const [activeTabParams, setActiveTabParams] = useState<{
     width?: number
     positionLeft?: number
   }>()
-  const [activeTab, setActiveTab] = useState(items[0])
+  const activeInitTab = items.find(
+    (item) => item.toUpperCase() === queryParameter?.toUpperCase()
+  )
+  const [activeTab, setActiveTab] = useState(activeInitTab || items[0])
   const activeTabRef = useRef<HTMLDivElement>(null)
+
+  const onTabClick = (tab: string) => {
+    onChangeQueryParameter(tab)
+    setActiveTab(tab)
+  }
 
   useLayoutEffect(() => {
     setActiveTabParams({
@@ -68,7 +80,7 @@ const Tabs: React.FC<Props> = ({ items }) => {
         <TabItem
           ref={activeTab === item ? activeTabRef : null}
           key={item}
-          onClick={() => setActiveTab(item)}
+          onClick={() => onTabClick(item)}
         >
           {item.toUpperCase()}
         </TabItem>
