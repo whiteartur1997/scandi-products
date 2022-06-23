@@ -7,6 +7,7 @@ import { useGetQueryParameter } from '../hooks/useGetQueryParameter'
 import { useQuery } from '@apollo/client'
 import { GET_PRODUCTS } from '../graphql/getProducts'
 import Loader from '../components/Loader'
+import ProductCard from '../components/ProductCard'
 
 /*
  * PROPS
@@ -20,6 +21,11 @@ interface Props {
  * STYLES
  */
 
+const CategoryTitle = styled(Label)`
+  display: block;
+  margin-bottom: ${theme.spacingUnit * 13}px;
+`
+
 const ProductList = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, 386px);
@@ -32,16 +38,15 @@ const ProductList = styled.div`
  */
 
 const CategoryPage: React.FC<Props> = ({ categories }) => {
-  console.log('yo')
   const { queryParameter } = useGetQueryParameter('category')
-
   const queryVariable = categories.find(
-    (cat) => cat.name.toUpperCase() === queryParameter.toUpperCase()
+    (cat) => cat.name.toUpperCase() === queryParameter?.toUpperCase()
   )
   const { loading, data } = useQuery<GetProductsQuery>(GET_PRODUCTS, {
     variables: {
       title: queryVariable ? queryVariable.name.toLowerCase() : 'all'
-    }
+    },
+    fetchPolicy: 'network-only'
   })
 
   if (loading) {
@@ -50,12 +55,16 @@ const CategoryPage: React.FC<Props> = ({ categories }) => {
 
   return (
     <div>
-      <Label Component="h1" size={LabelSize.XL} textTransform="capitalize">
+      <CategoryTitle
+        Component="h1"
+        size={LabelSize.XL}
+        textTransform="capitalize"
+      >
         {data.category.name}
-      </Label>
+      </CategoryTitle>
       <ProductList>
         {data.category.products.map((product) => (
-          <div key={product.name}>{product.name}</div>
+          <ProductCard key={product.id} product={product} />
         ))}
       </ProductList>
     </div>

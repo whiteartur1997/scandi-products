@@ -6,9 +6,8 @@ import { theme } from '../../styles/theme'
  * TYPES
  */
 
-type FontWeight = 'light' | 'regular' | 'medium' | 'semi-bold' | 'bold'
+type FontWeight = 'light' | 'normal' | 'medium' | 'semi-bold' | 'bold'
 type LabelComponent = 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p'
-type TextWrap = 'normal' | 'noWrap' | 'breakWord' | 'ellipsis'
 type TextTransform = 'capitalize' | 'lowercase' | 'uppercase' | 'none'
 
 export enum LabelSize {
@@ -45,12 +44,11 @@ interface LabelProps {
 const defaultProps: LabelProps = {
   color: theme.main,
   Component: 'span',
-  fontWeight: 'regular',
+  fontWeight: 'normal',
   gutter: Gutter.No,
   inline: true,
   size: LabelSize.M,
-  textTransform: 'none',
-  textWrap: 'normal'
+  textTransform: 'none'
 }
 
 const labelDisplay = (p: LabelProps) => {
@@ -87,8 +85,7 @@ const labelCss = (props: LabelProps = defaultProps) => css`
     font-weight: ${props.fontWeight};
     line-height: 1.5;
     margin: 0 0 ${theme.spacingUnit * props.gutter!}px;
-    text-wrap: ${props.textWrap};
-    text-transform: ${props.textTransform}
+    text-transform: ${props.textTransform};
   `}
 `
 

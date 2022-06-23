@@ -2,16 +2,16 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { theme, ZIndex } from '../styles/theme'
 import { Label, LabelSize } from './Label/Label'
-import productimage from './../assets/images/productImage.png'
 import EmptyCart from './EmptyCart'
 import { Button } from './Button'
+import { Product } from '../generated-types/types'
 
 /*
  * PROPS
  */
 
 interface Props {
-  outOfStock: boolean
+  product: Product
 }
 
 /*
@@ -44,13 +44,13 @@ const Wrapper = styled.div`
   }
 `
 
-const ImageWrapper = styled.div<{ outOfStock?: boolean }>`
+const ImageWrapper = styled.div<{ inStock: boolean }>`
   position: relative;
   height: 330px;
   width: 100%;
 
-  ${({ outOfStock }) =>
-    outOfStock &&
+  ${({ inStock }) =>
+    !inStock &&
     css`
       &:before {
         content: 'Out of stock';
@@ -80,6 +80,8 @@ const ImageWrapper = styled.div<{ outOfStock?: boolean }>`
 
 const Image = styled.img`
   width: 100%;
+  height: 100%;
+  object-fit: contain;
 `
 
 const DetailsWrapper = styled.div`
@@ -88,18 +90,22 @@ const DetailsWrapper = styled.div`
   padding-top: ${theme.spacingUnit * 3}px;
 `
 
-const ProductCard: React.FC<Props> = ({ outOfStock }) => {
+const ProductCard: React.FC<Props> = ({ product }) => {
+  const { inStock, name, gallery, prices } = product
+  console.log('proces', prices)
+  const imgSrc = (gallery && gallery[0]) || ''
+
   return (
     <Wrapper>
-      <ImageWrapper outOfStock={outOfStock}>
-        <Image src={productimage} alt="Product image" />
+      <ImageWrapper inStock={Boolean(inStock)}>
+        <Image src={imgSrc} alt={name} />
         <CartButton height={52} isRound={true} width={52}>
           <EmptyCart color={theme.background} />
         </CartButton>
       </ImageWrapper>
       <DetailsWrapper>
         <Label Component="h6" fontWeight="light" size={LabelSize.S}>
-          Apollo Running Short
+          {name}
         </Label>
         <Label fontWeight="medium" size={LabelSize.S}>
           $50.00
