@@ -5,13 +5,14 @@ import { Label, LabelSize } from './Label/Label'
 import EmptyCart from './EmptyCart'
 import { Button } from './Button'
 import { Product } from '../generated-types/types'
+import { useCurrencyContext } from '../context/currency/context'
 
 /*
  * PROPS
  */
 
 interface Props {
-  product: Product
+  product: Pick<Product, 'name' | 'gallery' | 'inStock' | 'prices'>
 }
 
 /*
@@ -91,10 +92,13 @@ const DetailsWrapper = styled.div`
 `
 
 const ProductCard: React.FC<Props> = ({ product }) => {
+  const { currency } = useCurrencyContext()
   const { inStock, name, gallery, prices } = product
-  console.log('proces', prices)
   const imgSrc = (gallery && gallery[0]) || ''
-
+  console.log('here', name)
+  const currentPriceAmount = prices!.find(
+    (price) => price.currency.symbol === currency.symbol
+  )!.amount
   return (
     <Wrapper>
       <ImageWrapper inStock={Boolean(inStock)}>
@@ -108,7 +112,8 @@ const ProductCard: React.FC<Props> = ({ product }) => {
           {name}
         </Label>
         <Label fontWeight="medium" size={LabelSize.S}>
-          $50.00
+          {currency.symbol}
+          {currentPriceAmount}
         </Label>
       </DetailsWrapper>
     </Wrapper>

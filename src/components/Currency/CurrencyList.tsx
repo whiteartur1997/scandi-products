@@ -2,16 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 import { theme } from '../../styles/theme'
 import { CSSTransition, TransitionStatus } from 'react-transition-group'
-import { GetCurrenciesQuery } from '../../generated-types/types'
+import { Currency } from '../../generated-types/types'
 
 /*
  * PROPS
  */
 
 interface Props {
-  currencies: GetCurrenciesQuery['currencies']
+  currencies: Currency[]
   isOpen: boolean
-  onChangeCurrentCurrency: (currentCurrency: string) => void
+  onChangeCurrentCurrency: (currentCurrency: Currency) => void
 }
 
 /*
@@ -78,13 +78,13 @@ const CurrencyList: React.FC<Props> = ({
     >
       {(state) => (
         <ListWrapper state={state}>
-          {currencies?.map((cur) => {
+          {currencies.map((cur) => {
             return (
               <ListItem
-                key={cur!.label}
-                onClick={() => onChangeCurrentCurrency(cur!.symbol)}
+                key={cur.label}
+                onClick={() => onChangeCurrentCurrency(cur)}
               >
-                {cur!.symbol} {cur!.label}
+                {cur.symbol} {cur.label}
               </ListItem>
             )
           })}

@@ -34,7 +34,6 @@ interface LabelProps {
   inline?: boolean
   size?: LabelSize
   textTransform?: TextTransform
-  textWrap?: TextWrap
 }
 
 /*
@@ -101,7 +100,6 @@ const LabelComponent: React.FC<LabelProps> = ({
   inline,
   size,
   textTransform,
-  textWrap,
   ...rest
 }) => {
   return <Component {...rest} />

@@ -2,9 +2,8 @@ import React, { useState } from 'react'
 import chevron from './../../assets/images/chevron-down-solid.svg'
 import CurrencyList from './CurrencyList'
 import styled from 'styled-components'
-import { useApolloClient } from '@apollo/client'
-import { GetCurrenciesQuery } from '../../generated-types/types'
-import { GET_CURRENCIES } from '../../graphql/getCurrencies'
+import { Currency } from '../../generated-types/types'
+import { useCurrencyContext } from '../../context/currency/context'
 
 /*
  * STYLES
@@ -31,28 +30,22 @@ const Chevron = styled.img<{ isOpen: boolean }>`
  * COMPONENT
  */
 
-const Currency = () => {
+const CurrencyComponent = () => {
   const [isCurrencyListOpen, setIsCurrencyListOpen] = useState(false)
-  const client = useApolloClient()
-  const currencies = client.readQuery<GetCurrenciesQuery>({
-    query: GET_CURRENCIES
-  })
-  const [currentCurrency, setCurrentCurrency] = useState<string>(
-    currencies!.currencies![0]!.symbol
-  )
-  const onChangeCurrentCurrency = (currentCurrency: string) => {
+  const { currency, currencyList, setCurrency } = useCurrencyContext()
+  const onChangeCurrentCurrency = (currentCurrency: Currency) => {
     setIsCurrencyListOpen(false)
-    setCurrentCurrency(currentCurrency)
+    setCurrency(currentCurrency)
   }
 
   return (
     <CurrencyBlockWrapper>
       <CurrencyIndicator onClick={() => setIsCurrencyListOpen((prev) => !prev)}>
-        {currentCurrency}
+        {currency.symbol}
         <Chevron isOpen={isCurrencyListOpen} src={chevron} alt="chevron down" />
       </CurrencyIndicator>
       <CurrencyList
-        currencies={currencies!.currencies}
+        currencies={currencyList}
         isOpen={isCurrencyListOpen}
         onChangeCurrentCurrency={onChangeCurrentCurrency}
       />
@@ -60,4 +53,4 @@ const Currency = () => {
   )
 }
 
-export default Currency
+export default CurrencyComponent

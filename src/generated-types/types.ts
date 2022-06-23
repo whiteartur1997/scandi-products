@@ -102,4 +102,4 @@ export type GetProductsQueryVariables = Exact<{
 }>;
 
 
-export type GetProductsQuery = { __typename?: 'Query', category?: { __typename?: 'Category', name?: string | null, products: Array<{ __typename?: 'Product', name: string, inStock?: boolean | null, id: string, gallery?: Array<string | null> | null, prices: Array<{ __typename?: 'Price', amount: number, currency: { __typename?: 'Currency', symbol: string } }> } | null> } | null };
+export type GetProductsQuery = { __typename?: 'Query', category?: { __typename?: 'Category', name?: string | null, products: Array<{ __typename?: 'Product', name: string, inStock?: boolean | null, id: string, gallery?: Array<string | null> | null, prices: Array<{ __typename?: 'Price', amount: number, currency: { __typename?: 'Currency', symbol: string, label: string } }> } | null> } | null };

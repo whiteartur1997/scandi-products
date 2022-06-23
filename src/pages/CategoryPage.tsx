@@ -39,12 +39,12 @@ const ProductList = styled.div`
 
 const CategoryPage: React.FC<Props> = ({ categories }) => {
   const { queryParameter } = useGetQueryParameter('category')
-  const queryVariable = categories.find(
-    (cat) => cat.name.toUpperCase() === queryParameter?.toUpperCase()
+  const queryVariable = categories?.find(
+    (cat) => cat?.name?.toUpperCase() === queryParameter?.toUpperCase()
   )
   const { loading, data } = useQuery<GetProductsQuery>(GET_PRODUCTS, {
     variables: {
-      title: queryVariable ? queryVariable.name.toLowerCase() : 'all'
+      title: queryVariable ? queryVariable?.name?.toLowerCase() : 'all'
     },
     fetchPolicy: 'network-only'
   })
@@ -60,11 +60,11 @@ const CategoryPage: React.FC<Props> = ({ categories }) => {
         size={LabelSize.XL}
         textTransform="capitalize"
       >
-        {data.category.name}
+        {data?.category?.name}
       </CategoryTitle>
       <ProductList>
-        {data.category.products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+        {data?.category?.products.map((product) => (
+          <ProductCard key={product?.id} product={product!} />
         ))}
       </ProductList>
     </div>

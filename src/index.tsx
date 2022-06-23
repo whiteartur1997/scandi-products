@@ -6,14 +6,17 @@ import GlobalCSS from './styles/global'
 import { ApolloProvider } from '@apollo/client'
 import { apolloClient } from './apollo-client/client'
 import { BrowserRouter } from 'react-router-dom'
+import CurrencyProvider from './context/currency/provider'
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
+const root = ReactDOM.createRoot(document.getElementById('root')!)
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <ApolloProvider client={apolloClient}>
-        <GlobalCSS />
-        <App />
+        <CurrencyProvider>
+          <GlobalCSS />
+          <App />
+        </CurrencyProvider>
       </ApolloProvider>
     </BrowserRouter>
   </React.StrictMode>

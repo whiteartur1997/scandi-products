@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Tabs from './Tabs/Tabs'
 import logo from './../assets/images/a-logo.svg'
-import Currency from './Currency/Currency'
+import CurrencyComponent from './Currency/CurrencyComponent'
 import { GetCategoriesQuery } from '../generated-types/types'
 import { useApolloClient } from '@apollo/client'
 import { GET_CATEGORIES } from '../graphql/getCategories'
@@ -47,7 +47,7 @@ const Header = () => {
       <Container>
         <Tabs items={tabItems || []} searchedParam="category" />
         <img src={logo} alt="Logo" />
-        <Currency />
+        <CurrencyComponent />
       </Container>
     </Wrapper>
   )
