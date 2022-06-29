@@ -6,7 +6,7 @@ import { theme } from '../../styles/theme'
  * TYPES
  */
 
-type FontWeight = 'light' | 'normal' | 'medium' | 'semi-bold' | 'bold'
+type FontWeight = '300' | '400' | '500' | '600' | '700'
 type LabelComponent = 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p'
 type TextTransform = 'capitalize' | 'lowercase' | 'uppercase' | 'none'
 
@@ -18,7 +18,7 @@ export enum LabelSize {
   XS = 16
 }
 
-enum Gutter {
+export enum Gutter {
   No,
   Small,
   Medium,
@@ -43,7 +43,7 @@ interface LabelProps {
 const defaultProps: LabelProps = {
   color: theme.main,
   Component: 'span',
-  fontWeight: 'normal',
+  fontWeight: '400',
   gutter: Gutter.No,
   inline: true,
   size: LabelSize.M,
@@ -62,13 +62,13 @@ const labelDisplay = (p: LabelProps) => {
 
 const fontWeightToFont = (fontWeight: FontWeight) => {
   switch (fontWeight) {
-    case 'light':
+    case '300':
       return 'font-family: Raleway-Light, sans-serif;'
-    case 'medium':
+    case '500':
       return 'font-family: Raleway-Medium, sans-serif;'
-    case 'semi-bold':
+    case '600':
       return 'font-family: Raleway-SemiBold, sans-serif;'
-    case 'bold':
+    case '700':
       return 'font-family: Raleway-Bold, sans-serif;'
     default:
       return 'font-family: Raleway-Regular, sans-serif;'

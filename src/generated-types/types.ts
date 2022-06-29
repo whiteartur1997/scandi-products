@@ -97,9 +97,16 @@ export type GetCurrenciesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCurrenciesQuery = { __typename?: 'Query', currencies?: Array<{ __typename?: 'Currency', label: string, symbol: string } | null> | null };
 
+export type GetProductQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, name: string, inStock?: boolean | null, gallery?: Array<string | null> | null, description: string, brand: string, attributes?: Array<{ __typename?: 'AttributeSet', id: string, name?: string | null, type?: string | null, items?: Array<{ __typename?: 'Attribute', displayValue?: string | null, value?: string | null, id: string } | null> | null } | null> | null, prices: Array<{ __typename?: 'Price', amount: number, currency: { __typename?: 'Currency', symbol: string, label: string } }> } | null };
+
 export type GetProductsQueryVariables = Exact<{
   title: Scalars['String'];
 }>;
 
 
-export type GetProductsQuery = { __typename?: 'Query', category?: { __typename?: 'Category', name?: string | null, products: Array<{ __typename?: 'Product', name: string, inStock?: boolean | null, id: string, gallery?: Array<string | null> | null, prices: Array<{ __typename?: 'Price', amount: number, currency: { __typename?: 'Currency', symbol: string, label: string } }> } | null> } | null };
+export type GetProductsQuery = { __typename?: 'Query', category?: { __typename?: 'Category', name?: string | null, products: Array<{ __typename?: 'Product', id: string, name: string, inStock?: boolean | null, gallery?: Array<string | null> | null, description: string, brand: string, attributes?: Array<{ __typename?: 'AttributeSet', id: string, name?: string | null, type?: string | null, items?: Array<{ __typename?: 'Attribute', displayValue?: string | null, value?: string | null, id: string } | null> | null } | null> | null, prices: Array<{ __typename?: 'Price', amount: number, currency: { __typename?: 'Currency', symbol: string, label: string } }> } | null> } | null };

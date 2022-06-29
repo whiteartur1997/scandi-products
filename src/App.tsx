@@ -27,6 +27,10 @@ const PageWrapper = styled.div`
   margin: 0 auto;
 `
 
+/*
+ * COMPONENT
+ */
+
 function App() {
   const { loading: categoriesAreLoading, data: categories } =
     useQuery<GetCategoriesQuery>(GET_CATEGORIES)

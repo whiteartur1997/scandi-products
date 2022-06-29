@@ -6,6 +6,7 @@ import EmptyCart from './EmptyCart'
 import { Button } from './Button'
 import { Product } from '../generated-types/types'
 import { useCurrencyContext } from '../context/currency/context'
+import { Image } from './Image'
 
 /*
  * PROPS
@@ -79,23 +80,20 @@ const ImageWrapper = styled.div<{ inStock: boolean }>`
     `}
 `
 
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-`
-
 const DetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: ${theme.spacingUnit * 3}px;
 `
 
+/*
+ * COMPONENT
+ */
+
 const ProductCard: React.FC<Props> = ({ product }) => {
   const { currency } = useCurrencyContext()
   const { inStock, name, gallery, prices } = product
   const imgSrc = (gallery && gallery[0]) || ''
-  console.log('here', name)
   const currentPriceAmount = prices!.find(
     (price) => price.currency.symbol === currency.symbol
   )!.amount
@@ -108,12 +106,11 @@ const ProductCard: React.FC<Props> = ({ product }) => {
         </CartButton>
       </ImageWrapper>
       <DetailsWrapper>
-        <Label Component="h6" fontWeight="light" size={LabelSize.S}>
+        <Label Component="h6" fontWeight="300" size={LabelSize.S}>
           {name}
         </Label>
-        <Label fontWeight="medium" size={LabelSize.S}>
-          {currency.symbol}
-          {currentPriceAmount}
+        <Label fontWeight="500" size={LabelSize.S}>
+          {`${currency.symbol} ${currentPriceAmount}`}
         </Label>
       </DetailsWrapper>
     </Wrapper>

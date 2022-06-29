@@ -6,7 +6,7 @@ import CurrencyComponent from './Currency/CurrencyComponent'
 import { GetCategoriesQuery } from '../generated-types/types'
 import { useApolloClient } from '@apollo/client'
 import { GET_CATEGORIES } from '../graphql/getCategories'
-import { theme } from '../styles/theme'
+import { theme, ZIndex } from '../styles/theme'
 
 /*
  * STYLES
@@ -18,6 +18,8 @@ const Wrapper = styled.div`
   height: 80px;
   display: flex;
   justify-content: center;
+  background-color: ${theme.background};
+  z-index: ${ZIndex.high};
 `
 
 const Container = styled.div`
