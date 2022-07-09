@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { theme } from '../../styles/theme'
-import { useGetQueryParameter } from '../../hooks/useGetQueryParameter'
+import { theme } from '../styles/theme'
+import { useGetQueryParameter } from '../hooks/useGetQueryParameter'
 
 /*
  * TYPES

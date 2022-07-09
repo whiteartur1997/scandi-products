@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import chevron from './../../assets/images/chevron-down-solid.svg'
+import chevron from '../assets/images/chevron-down-solid.svg'
 import CurrencyList from './CurrencyList'
 import styled from 'styled-components'
-import { Currency } from '../../generated-types/types'
-import { useCurrencyContext } from '../../context/currency/context'
+import { Currency } from '../generated-types/types'
+import { useCurrencyContext } from '../context/currency/context'
 
 /*
  * STYLES

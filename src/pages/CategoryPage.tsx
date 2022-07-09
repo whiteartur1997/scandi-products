@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Label, LabelSize } from '../components/Label/Label'
+import { Label, LabelSize } from '../components/Label'
 import styled from 'styled-components'
 import { theme } from '../styles/theme'
 import { GetCategoriesQuery, GetProductsQuery } from '../generated-types/types'

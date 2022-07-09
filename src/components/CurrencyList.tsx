@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { theme } from '../../styles/theme'
+import { theme } from '../styles/theme'
 import { CSSTransition, TransitionStatus } from 'react-transition-group'
-import { Currency } from '../../generated-types/types'
+import { Currency } from '../generated-types/types'
 
 /*
  * PROPS

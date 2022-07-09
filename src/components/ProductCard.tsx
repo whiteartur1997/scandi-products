@@ -1,19 +1,20 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { theme, ZIndex } from '../styles/theme'
-import { Label, LabelSize } from './Label/Label'
+import { Label, LabelSize } from './Label'
 import EmptyCart from './EmptyCart'
 import { Button } from './Button'
 import { Product } from '../generated-types/types'
 import { useCurrencyContext } from '../context/currency/context'
 import { Image } from './Image'
+import { Link } from 'react-router-dom'
 
 /*
  * PROPS
  */
 
 interface Props {
-  product: Pick<Product, 'name' | 'gallery' | 'inStock' | 'prices'>
+  product: Pick<Product, 'id' | 'name' | 'gallery' | 'inStock' | 'prices'>
 }
 
 /*
@@ -92,28 +93,30 @@ const DetailsWrapper = styled.div`
 
 const ProductCard: React.FC<Props> = ({ product }) => {
   const { currency } = useCurrencyContext()
-  const { inStock, name, gallery, prices } = product
+  const { id, inStock, name, gallery, prices } = product
   const imgSrc = (gallery && gallery[0]) || ''
   const currentPriceAmount = prices!.find(
     (price) => price.currency.symbol === currency.symbol
   )!.amount
   return (
-    <Wrapper>
-      <ImageWrapper inStock={Boolean(inStock)}>
-        <Image src={imgSrc} alt={name} />
-        <CartButton height={52} isRound={true} width={52}>
-          <EmptyCart color={theme.background} />
-        </CartButton>
-      </ImageWrapper>
-      <DetailsWrapper>
-        <Label Component="h6" fontWeight="300" size={LabelSize.S}>
-          {name}
-        </Label>
-        <Label fontWeight="500" size={LabelSize.S}>
-          {`${currency.symbol} ${currentPriceAmount}`}
-        </Label>
-      </DetailsWrapper>
-    </Wrapper>
+    <Link to={`/products/${id}`}>
+      <Wrapper>
+        <ImageWrapper inStock={Boolean(inStock)}>
+          <Image src={imgSrc} alt={name} />
+          <CartButton height={52} isRound={true} width={52}>
+            <EmptyCart color={theme.background} />
+          </CartButton>
+        </ImageWrapper>
+        <DetailsWrapper>
+          <Label Component="h6" fontWeight="300" size={LabelSize.S}>
+            {name}
+          </Label>
+          <Label fontWeight="500" size={LabelSize.S}>
+            {`${currency.symbol} ${currentPriceAmount}`}
+          </Label>
+        </DetailsWrapper>
+      </Wrapper>
+    </Link>
   )
 }
 

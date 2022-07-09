@@ -4,6 +4,7 @@ import { theme } from '../styles/theme'
 
 interface Props {
   backgroundColor?: string
+  color?: string
   children?: React.ReactNode
   disabled?: boolean
   height?: number
@@ -32,6 +33,7 @@ const ButtonComponent: React.FC<Props> = ({
 
 export const Button = styled(ButtonComponent)<Props>`
   background-color: ${(props) => props.backgroundColor || theme.secondary};
+  color: ${(props) => props.color || theme.background};
   border-radius: ${(props) => (props.isRound ? '50%' : 0)};
   font-size: 16px;
   line-height: 1.2;

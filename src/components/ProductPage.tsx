@@ -5,9 +5,11 @@ import { GET_PRODUCT } from '../graphql/getProduct'
 import Loader from './Loader'
 import styled from 'styled-components'
 import { theme } from '../styles/theme'
-import { GetProductQuery } from '../generated-types/types'
+import { Attribute, GetProductQuery } from '../generated-types/types'
 import { Image } from './Image'
-import { Gutter, Label, LabelSize } from './Label/Label'
+import { Gutter, Label, LabelSize } from './Label'
+import AttributeSet from './AttributeSet'
+import { useCurrencyContext } from '../context/currency/context'
 import { Button } from './Button'
 
 /*
@@ -43,7 +45,17 @@ const ProductDetails = styled.div`
 `
 
 const Attributes = styled.div`
-  margin-top: ${theme.spacingUnit * 4}px;
+  margin: ${theme.spacingUnit * 4}px 0;
+`
+
+const PriceWrapper = styled.div`
+  margin-bottom: ${theme.spacingUnit * 2.5}px;
+`
+
+const Description = styled.p`
+  font-weight: 400;
+  font-size: ${LabelSize.XS}px;
+  margin-top: ${theme.spacingUnit * 5}px;
 `
 
 /*
@@ -52,7 +64,7 @@ const Attributes = styled.div`
 
 const ProductPage = () => {
   const { id } = useParams()
-
+  const { currency } = useCurrencyContext()
   const { data, error, loading } = useQuery<GetProductQuery>(GET_PRODUCT, {
     variables: {
       id
@@ -67,8 +79,10 @@ const ProductPage = () => {
     return <h1>Error happened</h1>
   }
 
-  const { attributes, gallery, brand, name } = data!.product!
-
+  const { attributes, gallery, brand, name, prices, description } =
+    data!.product!
+  const currentPrice =
+    prices.find((price) => price.currency.label === currency.label) ?? prices[0]
   return (
     <Wrapper>
       <ImagesBlock>
@@ -90,28 +104,31 @@ const ProductPage = () => {
         </Label>
         <Attributes>
           {attributes?.map((attr) => (
-            <div key={attr!.id}>
-              <Label fontWeight="700" size={LabelSize.S} gutter={Gutter.Small}>
-                {attr!.name}
-              </Label>
-              {attr!.items!.map((item) => {
-                if (attr!.type === 'text') {
-                  return (
-                    <Button
-                      backgroundColor={theme.main}
-                      height={45}
-                      key={item!.id}
-                      width={63}
-                      withBorder
-                    >
-                      {item!.displayValue}
-                    </Button>
-                  )
-                }
-              })}
-            </div>
+            <AttributeSet
+              key={attr!.id}
+              name={attr!.name!}
+              items={attr!.items! as Attribute[]}
+              type={attr!.type!}
+            />
           ))}
         </Attributes>
+        <PriceWrapper>
+          <Label
+            inline={false}
+            fontWeight="700"
+            size={LabelSize.S}
+            gutter={Gutter.Small}
+          >
+            Price:
+          </Label>
+          <Label inline={false} fontWeight="700" size={LabelSize.M}>
+            {`${currentPrice.currency.symbol} ${currentPrice.amount}`}
+          </Label>
+        </PriceWrapper>
+        <Button width={292} height={52}>
+          Add to cart
+        </Button>
+        <Description>{description}</Description>
       </ProductDetails>
     </Wrapper>
   )
